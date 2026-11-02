@@ -1,3 +1,4 @@
+ //Autores: Julen Salceda NIP:957049 ; Daniel del Prado NIP: 958028
 %{
 #include <stdlib.h>
 #include <stdbool.h>
@@ -119,17 +120,14 @@ bool seccionCodigo = false;
 				}
 			}
 				
-<muchosComentarios>[^*/]* 
+
 <muchosComentarios>"*/"	{  if (enBloqueCodigo){
-				lBloquesC++;
 				BEGIN(bloqueCodigo);
 				}
 			else if (enBloqueAccion){
-				lAcciones++;	
 				BEGIN(bloqueAccion);
 				}
 			else if (seccionCodigo){
-				lCodigo++; 
 				BEGIN(bloqueC);
 				}
 			else if (BseccionDeclaraciones){
@@ -139,6 +137,18 @@ bool seccionCodigo = false;
 				BEGIN (seccionReglas);
 				}
 			}
+<muchosComentarios>\n	{if (enBloqueCodigo){
+				lBloquesC++;
+				}
+			else if (enBloqueAccion){
+				lAcciones++;	
+				}
+			else if(seccionCodigo){
+				lCodigo++; 
+				}
+			}
+<muchosComentarios>.	//Consumir lo que no sea salto de linea ni otra regla
+
 <cadenaReglas>\"	{BEGIN(seccionReglas);}
 <cadenaReglas>.	
 
