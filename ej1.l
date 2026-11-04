@@ -93,8 +93,8 @@ bool seccionCodigo = false;
 <bloqueAccion>"/*"	BEGIN(muchosComentarios);
 <bloqueAccion>\"	BEGIN(cadenaAccion);
 <bloqueAccion>.		//Comer lo innecesario
-<bloqueAccion>if[^{]+\{	llaveCondicion++;
-
+<bloqueAccion>if[^{]*\{	llaveCondicion++;
+<bloqueAccion>else[^{]*\{	llaveCondicion++;
 
 <bloqueC>\n	lCodigo++;
 <bloqueC>.	//Comer lo innecesario
@@ -165,7 +165,6 @@ bool seccionCodigo = false;
 %%
 int main() {
 	yylex();
-	printf("Salida\n\n");
 	printf("C1:%d\n", lBloquesC);
 	printf("C2:%d\n",lAcciones);
 	printf("C3:%d\n",lCodigo);
